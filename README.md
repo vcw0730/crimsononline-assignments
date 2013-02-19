@@ -13,4 +13,3 @@ Feel free to use your own workflow, but you're on your own if you corrupt your r
 ## Running Python files
     cd /path/to/assignmentX
     python assignmentX.py    
-    ./assignmentX.py      # only executable files
