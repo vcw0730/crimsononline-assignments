@@ -9,3 +9,8 @@ Assignments will be distributed here.
 1. Pull down new assignments using `git pull upstream`.
 
 Feel free to use your own workflow, but you're on your own if you corrupt your repository! Be sure your latest commits are visible publicly on GitHub by the deadline.
+
+## Running Python files
+    cd /path/to/assignmentX
+    python assignmentX.py    
+    ./assignmentX.py      # only executable files
