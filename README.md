@@ -2,6 +2,7 @@
 Assignments will be distributed through this repository.
 
 ## Instructions
+1. [Add your public key to GitHub.](https://help.github.com/articles/generating-ssh-keys)
 1. Fork this repository using the button on the top right.
 1. Clone the repository on your computer.
     `git clone git@github.com:USERNAME/crimsononline-assignments.git`
