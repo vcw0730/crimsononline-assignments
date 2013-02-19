@@ -6,8 +6,10 @@ Assignments will be distributed through this repository.
 1. Fork this repository using the button on the top right.
 1. Clone the repository on your computer.
     `git clone git@github.com:USERNAME/crimsononline-assignments.git`
+1. `cd crimsononline-assignments`.
 1. Add our repository as an upstream remote.
     `git remote add upstream git@github.com:harvard-crimson/crimsononline-assignments.git`
+1. Work on the assignment!
 1. Commit your changes using `git commit -am "COMMIT MESSAGE"` and push to master with `git push origin master`
 1. Pull down new assignments using `git pull upstream master`.
 
