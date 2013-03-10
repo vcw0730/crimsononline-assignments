@@ -40,13 +40,74 @@ g)  With a minimum of code duplication, modify the Building class so that
     chose to inherit any classes from Building (which you should have).
 """
 
+# did not implement part g
+
 class Person:
-    def __init__(self):
+    def __init__(self, first_name, last_name, gender):
+        self.firstname = first_name
+        self.lastname = last_name
+        self.gender = gender
+        if self.firstname[0].isupper() == False or self.lastname[0].isupper() == False:
+            raise Exception ("First letter not capitalized")  
+        elif self.gender != 'M' and self.gender != 'F':
+            raise Exception ("Not a gender")
         pass
 
-class Building:
+from collections import defaultdict
+
+class Building(object):
+    locations = defaultdict(list)
+    
+    def __init__(self, location):
+        self.d = defaultdict(list)
+        # sorts dict by room num
+        sorted(self.d, key=lambda key: self.d[key])
+        Building.locations[self].append(location)
+    
     def enter(self, person, room_no):
+        self.room_no = room_no
+        for room, per in self.d.items():
+            if person in per:
+                self.d[room].remove(person)
+        self.d[self.room_no].append(person)
         pass
 
     def where_is(self, person):
-        pass
+        for room, per in self.d.items():
+            if person in per:
+                return room
+        return "Not in building"
+    
+    def locate(self, location):
+        return 
+        
+class Office(Building):
+    def __init__(self, emplist):
+        self.emplist = emplist
+        super(Office, self).__init__()
+        
+    def enter(self, person, room_no):
+        if person in self.emplist:
+            super(Office, self).enter()
+        else:
+            return "Cannot enter"
+            
+class House(Building):
+    def __init__(self):
+        super(House, self).__init__()
+        self.d = []
+        
+    def enter(self, person):
+        self.list.append(person)
+    
+    def at_home(self, person):
+        if person in self.list:
+            return True
+        else: return False   
+
+def locate (location):
+    # checks if location is in the locations dict, and if it is return corresponding building
+    for build, loc in Building.locations.items():   
+        if location in loc:
+            return build
+    return "None"

@@ -1,3 +1,5 @@
+# couldn't get pip / virtualenv to work
+
 """question 4
 
 Practice creating a new Python project. In a separate directory, you should:
