@@ -40,7 +40,9 @@ g)  With a minimum of code duplication, modify the Building class so that
     chose to inherit any classes from Building (which you should have).
 """
 
-# did not implement part g
+# chose to allow one location to hold multiple buildings, used dict allowing each tuple key to store multiple building values
+
+# 3g) in separate file q3g.py
 
 class Person:
     def __init__(self, first_name, last_name, gender):
@@ -51,51 +53,70 @@ class Person:
             raise Exception ("First letter not capitalized")  
         elif self.gender != 'M' and self.gender != 'F':
             raise Exception ("Not a gender")
-        pass
 
 from collections import defaultdict
 
 class Building(object):
     locations = defaultdict(list)
     
-    def __init__(self, location):
-        self.d = defaultdict(list)
-        # sorts dict by room num
-        sorted(self.d, key=lambda key: self.d[key])
-        Building.locations[self].append(location)
+    def __init__(self, num_rooms, location):
+        self.b = []
+        self.num_rooms = num_rooms
+        self.location = location
+        # keeps track of total people in building
+        self.ppl = []
+        # initializes building to list of empty rooms
+        for x in range(0, self.num_rooms):
+            self.b.append([])
+        Building.locations[self.location].append(self)
+    
+    # allows iteration over people in building
+    def __iter__(self):
+        return iter(self.ppl)
     
     def enter(self, person, room_no):
-        self.room_no = room_no
-        for room, per in self.d.items():
-            if person in per:
-                self.d[room].remove(person)
-        self.d[self.room_no].append(person)
-        pass
+        # the -1 adjusts user input to list input
+        self.room_no = room_no - 1
+        # tracks person was already in building
+        found = False
+        # iterate through each room
+        for room in range(0,self.num_rooms):
+            if person in self.b[room]:
+                self.b[room].remove(person)
+                found = True
+        self.b[self.room_no].append(person)
+        # if person newly entered building, then add to master list of people
+        if found == False:
+            self.ppl.append(person)
 
     def where_is(self, person):
-        for room, per in self.d.items():
-            if person in per:
-                return room
+        for room in range(0,self.num_rooms):
+            if person in self.b[room]:
+                #adjusts list input to user input
+                return room + 1
+        # returns this if person not found in any room
         return "Not in building"
-    
-    def locate(self, location):
-        return 
         
 class Office(Building):
-    def __init__(self, emplist):
+    # how do you ensure that the emplist parameter passed in by user is actually a list of Person instances?)
+    def __init__(self, num_rooms, location, emplist):
         self.emplist = emplist
-        super(Office, self).__init__()
+        super(Office, self).__init__(num_rooms, location)
         
     def enter(self, person, room_no):
         if person in self.emplist:
-            super(Office, self).enter()
+            super(Office, self).enter(person, room_no)
         else:
             return "Cannot enter"
             
+    def where_is(self, person):
+        return super(Office, self).where_is(person)
+            
 class House(Building):
-    def __init__(self):
-        super(House, self).__init__()
-        self.d = []
+    def __init__(self, location):
+        # num of rooms is not important, so just defaulted to 1
+        super(House, self).__init__(1, location)
+        self.list = []
         
     def enter(self, person):
         self.list.append(person)
@@ -106,8 +127,8 @@ class House(Building):
         else: return False   
 
 def locate (location):
-    # checks if location is in the locations dict, and if it is return corresponding building
-    for build, loc in Building.locations.items():   
-        if location in loc:
-            return build
+    # checks if location is in the locations dict, and if it is return corresponding building(s)
+    for loc, builds in Building.locations.items():   
+        if location == loc:
+            return builds
     return "None"
