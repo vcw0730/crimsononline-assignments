@@ -35,8 +35,11 @@ def parse_links_regex(filename):
     """
     pass
 
+from lxml import etree
+
 # I was unable to install lxml for some reason, getting errors when I try to run "sudo pip install lxml"
 def parse_links_xpath(filename):
+
     """question 2b
 
     Do the same using xpath and the lxml library from http://lxml.de rather

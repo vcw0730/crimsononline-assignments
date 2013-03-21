@@ -1,4 +1,3 @@
-# couldn't get pip / virtualenv to work
 
 """question 4
 
