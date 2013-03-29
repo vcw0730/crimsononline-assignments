@@ -17,4 +17,4 @@ Don't feel obligated to spend more than about ten minutes on your test program.
 We just want to see that you can use the toolchain.
 """
 
-GITHUB_URL = "http://github.com/YOU/PROJECT"
+GITHUB_URL = "https://github.com/vcw0730/q4"

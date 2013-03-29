@@ -1,24 +1,7 @@
 from collections import defaultdict
 import re
 
-# don't quite understand how reg expressions work
-
-def parse_links_regex(filename):
-    file = open(filename, "r")
-    html_list = file.read()
-    file.close()
-    # find all links matching form <a href="link">text</a>, capture link and text
-    urls = re.findall(r"<a href=\"([^\"]*)[^>]*>([^<]*)", html_list)
-    d = defaultdict(list)
-    # create key-val dict with txt as key and links as vals
-    # (I think) if two links use same txt, then they just both get added on as vals of that key
-    for link, txt in urls:
-        d[txt].append(link)
-    return d.items()
-        
-    # there are \n and random spaces in my dict...how to fix / why?
-    
-    """question 2a
+"""question 2a
 
     Using the re module, write a function that takes a path to an HTML file
     (assuming the HTML is well-formed) as input and returns a dictionary
@@ -32,19 +15,43 @@ def parse_links_regex(filename):
         You can get file 2 <a href="2.file">here</a>.
 
     What does it make the most sense to do here? 
-    """
-    pass
+"""
 
-from lxml import etree
+def parse_links_regex(filename):
+    file = open(filename, "r")
+    html_list = file.read()
+    file.close()
+    # find all links matching form <a href="link">text</a>, capture link and text
+    urls = re.findall(r"<a href=\"([^\"]*)[^>]*>([^<]*)", html_list)
+    d = defaultdict(list)
+    # create key-val dict with txt as key and links as vals
+    # (I think) if two links use same txt, then they just both get added on as vals of that key
+    for link, txt in urls:
+        d[txt].append(link)
+    return d
+        
+    # there are \n and random spaces in my dict...how to fix / why?
+    
 
-# I was unable to install lxml for some reason, getting errors when I try to run "sudo pip install lxml"
-def parse_links_xpath(filename):
-
-    """question 2b
+"""question 2b
 
     Do the same using xpath and the lxml library from http://lxml.de rather
     than regular expressions.
     
     Which approach is better? (Hint: http://goo.gl/mzl9t)
     """
-    pass
+
+# wondering what pos is?
+
+import lxml.html
+
+def parse_links_xpath(filename):
+    d = defaultdict(list)
+    html = lxml.html.parse(filename)
+    # converts parsed lxml tree object into HTML string so that iterlinks can use
+    htmlstr = lxml.html.tostring(html)
+    # iterates over each, inserting text as keys and links as values of corresponding keys
+    for elt, atr, link, pos in lxml.html.iterlinks(htmlstr):
+        d[elt.text].append(link)
+    return d
+    
